@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose'
 const userSchema = new Schema ({
-    username:{
+    userName:{
      type:String,
      required:true
     },
@@ -43,8 +43,8 @@ const userSchema = new Schema ({
     },
    role:{
     type:String,
-    default:'User',
-    enum:['Super-Admin','Admin','Job-Seeker','Employer']
+    default:'Job-Seeker',
+    enum:['Super-Admin','Admin','Job-Seeker','Employer',]
    },
    sendCode:{
     type:String,

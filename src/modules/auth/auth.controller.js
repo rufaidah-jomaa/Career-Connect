@@ -1,17 +1,17 @@
 import userModel from '../../../DB/models/User.model.js'
-//import bcrypt from 'bcryptjs'
-/*import jwt from  'jsonwebtoken'
+import bcrypt from 'bcryptjs'
+import jwt from  'jsonwebtoken'
 import sendEmail from '../../services/sendEmail.js'
 import {customAlphabet} from 'nanoid'
-import { AppError } from '../../services/AppError.js'*/
+import { AppError } from '../../services/AppError.js'
 
 
 export const getauth=(req,res)=>{
     return res.json("hello from auth ")
 }
 
-/*export const signup= async(req,res,next)=>{
-    const {userName,email,password}=req.body;
+export const register= async(req,res,next)=>{
+   try{ const {userName,email,password}=req.body;
 
     const user= await userModel.findOne({email: email})
     if(user){
@@ -28,8 +28,11 @@ export const getauth=(req,res)=>{
     const refreshToken = jwt.sign({email},process.env.confirmEmailSIG,{expiresIn:60*60*24*7})
     
        
-     await sendEmail(email,"Cycling Palestine" ,userName,token,refreshToken,'register')
-    return res.status(201).json({message:"success",newUser})
+     await sendEmail(email,"Career Connect" ,userName,token,refreshToken,'register')
+    return res.status(201).json({message:"success",newUser})}
+    catch(err){
+        console.log(err.message)
+    }
 }
 export const confirmEmail= async(req,res)=>{
   const {token} = req.params;
@@ -59,7 +62,7 @@ export const newconfirmEmail = async(req,res)=>{
     return next( new AppError('Error while confirming your Email, please try again',500))
 }
 
-export const signin= async(req,res,next)=>{
+export const login= async(req,res,next)=>{
     const {email,password}=req.body;
 
     const user = await userModel.findOne({email})
@@ -77,7 +80,6 @@ export const signin= async(req,res,next)=>{
     }
     if (user.status == "Blocked"){
         return next( new AppError('Your account is blocked!',403))
-
        }
        const token = jwt.sign({id:user._id,role:user.role},process.env.LOGINSIG)
        return res.status(200).json({message:"success",token})
@@ -110,4 +112,4 @@ export const forgotPassword = async(req,res,next) =>{
     user.save()
     return res.status(200).json({message:"success",user})
 }
-*/
+
